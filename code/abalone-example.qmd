@@ -48,7 +48,7 @@ abalone_clean <- abalone  |>
   # cleaning names to remove spaces
   clean_names()  |> 
   # selecting columns to rename
-  select(mean_p_h, change_in_area_mm2_d_1_25)  
+  select(mean_p_h, change_in_area_mm2_d_1_25) |> 
   # changing names of selected columns
   rename(mean_ph = mean_p_h, 
          change_in_area = change_in_area_mm2_d_1_25)
@@ -61,11 +61,11 @@ Don't forget to look at your data! Use `View(abalone_clean)` in the _Console_.
 ```{r}
 #| label: abalone-scatterplot
 
-# 
-ggplot(data = abalone_clean, # 
-       aes(x = mean_ph, # 
-           y = change_in_area)) 
-  # 
+# base layer: ggplot
+ggplot(data = abalone_clean, # pulling data from abalone_clean
+       aes(x = mean_ph, # x-axis: pH, y-axis: change in shell surface area/day
+           y = change_in_area)) +
+  # second layer: points to represent observations
   geom_point(size = 4,
              stroke = 1,
              fill = "firebrick4",
@@ -86,8 +86,8 @@ Don't forget to turn your warnings off either in the individual code chunk or in
 #| label: abalone-model
 
 abalone_model <- lm(
-  change_in_area ~ mean_ph, # 
-  data = abalone_clean      # 
+  change_in_area ~ mean_ph, # formula: change in shell SA/day as a function of pH
+  data = abalone_clean      # data frame: cleaned abalone data
 )
 ```
 
